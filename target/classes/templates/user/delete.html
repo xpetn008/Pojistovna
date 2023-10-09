@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/layout.html :: head}"></head>
+<body>
+<header th:replace="~{user/userIndex.html :: userHeader}"></header>
+<article class="mainArticle">
+    <div class="center">
+        <p>
+            <form method="post" th:action="@{/user/delete}">
+                <label>Jste si jisti, že chcete vymazat profil pojištěnce? Pro výběr pojištění budete muset založit nový profil.</label>
+                <button class="userDeleteButton" type="submit">Ano</button>
+            </form>
+        </p>
+    </div>
+</br><form class="zpet" th:action="@{/user}" method="get"><button type="submit">Zpět</button></form>
+</article>
+<footer th:replace="~{fragments/layout.html :: footer}"></footer>
+</body>
+</html>

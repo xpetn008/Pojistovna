@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/layout.html :: head}"></head>
+<body>
+<header th:fragment="adminHeader" class="mainHeader">
+    <div id="logo">
+        <h1>Pojišťovna</h1>
+    </div>
+    <nav class="menuNav">
+        <ul>
+            <li><a th:href="@{/}">O nás</a></li>
+            <li><a th:href="@{/admin}">Admin</a></li>
+            <li><a th:href="@{/admin/pojistenci}">Pojištěnci</a></li>
+            <li><a th:href="@{/admin/pojisteni}">Pojištění</a></li>
+            <li sec:authorize="isAuthenticated()"><form method="post" th:action="@{/logout}">
+                <button class="btn text-white">Odhlásit se</button>
+            </form></li>
+            <li><a th:href="@{/kontakt}">Kontakt</a></li>
+        </ul>
+    </nav>
+</header>
+<article class="mainArticle" id="indexArticle">
+<h3>Admin profil</h3>
+    <p>Tento profil slouží pro úpravu pojištění a kontrolu profilů jiných pojištěnců.</p>
+</article>
+</body>
+<footer th:replace="~{fragments/layout.html :: footer}"></footer>
+</html>

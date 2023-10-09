@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="cs-cz" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/layout.html :: head}"></head>
+<body>
+<header class="mainHeader">
+  <div id="logo">
+    <h1>Pojišťovna</h1>
+  </div>
+  <nav class="menuNav">
+    <ul>
+      <li><a th:href="@{/}">O nás</a></li>
+      <li sec:authorize="isAnonymous()"><a th:href="@{/registrace}">Registrace</a></li>
+      <li sec:authorize="isAnonymous()"><a th:href="@{/prihlaseni}">Přihlášení</a></li>
+      <li><a th:href="@{/kontakt}">Kontakt</a></li>
+    </ul>
+  </nav>
+</header>
+<article class="accountArticle">
+  <div class="outerWrapper" th:if="${success}">
+    <div class="alert-success">
+      <p th:text="${success}"></p>
+    </div>
+    <span class="close-button">&times;</span>
+  </div>
+  <h3>Přihlášení</h3></br>
+  <form class="accountForm" th:action="@{/prihlaseni}" method="post">
+    <label for="email">Uživatelský email</label></br>
+    <input id="email" name="email" type="email" /></br></br>
+    <label for="password">Heslo</label></br>
+    <input id="password" name="password" type="password" /></br>
+    <button class="submit" type="submit">Přihlásit se</button></br>
+    <a th:href="@{/registrace}">Registrace</a>
+
+    <p class="text-danger" th:if="${param.error}">Nesprávný email nebo heslo.</p>
+  </form>
+  </article>
+<footer th:replace="~{fragments/layout.html :: footer}"></footer>
+<script th:src="@{/scripts/closeAlertBox.js}"></script>
+</body>
+</html>

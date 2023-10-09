@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="cs-cz" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/layout.html :: head}">
+</head>
+<body>
+<header class="mainHeader">
+    <div id="logo">
+        <h1>Pojišťovna</h1>
+    </div>
+    <nav class="menuNav">
+        <ul>
+            <ul>
+                <li><a th:href="@{/}">O nás</a></li>
+                <li sec:authorize="isAnonymous()"><a th:href="@{/registrace}">Registrace</a></li>
+                <li sec:authorize="isAnonymous()"><a th:href="@{/prihlaseni}">Přihlášení</a></li>
+                <li th:if="${admin}" sec:authorize="isAuthenticated()"><a th:href="@{/admin}">Admin</a></li>
+                <li th:if="${admin}" sec:authorize="isAuthenticated()"><a th:href="@{/admin/pojistenci}">Pojištěnci</a></li>
+                <li th:if="${admin}" sec:authorize="isAuthenticated()"><a th:href="@{/admin/pojisteni}">Pojištění</a></li>
+                <li th:if="${!admin}" sec:authorize="isAuthenticated()"><a th:href="@{/user}">Profil</a></li>
+                <li sec:authorize="isAuthenticated()"><form method="post" th:action="@{/logout}">
+                    <button class="btn text-white">Odhlásit se</button>
+                </form></li>
+                <li><a th:href="@{/kontakt}">Kontakt</a></li>
+            </ul>
+        </ul>
+    </nav>
+</header>
+<article class="mainArticle" id="indexArticle">
+    <header>
+        <h3>Kontakt</h3>
+    </header>
+    <section>
+        <div class="kontaktniUdaje">
+            <strong>Tel:</strong>     +420 222 222 222</br>
+            <strong>E- mail:</strong> support@pojistovna.cz</br>
+            <strong>Adresa:</strong>  Václavské nám. 68, 110 00 Nové Město
+        </div>
+    </section>
+</article>
+<footer th:replace="~{fragments/layout.html :: footer}"></footer>
+</body>

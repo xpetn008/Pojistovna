@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/layout.html :: head}"></head>
+<body>
+<header th:replace="~{admin/adminIndex.html :: adminHeader}"></header>
+<article class="mainArticle">
+<form class="updateForm" method="post" th:action="@{/admin/pojisteni/update}" th:object="${pojisteniDTO}">
+  <p>Staré údaje</p></br>
+  <table>
+    <thead>
+      <tr>
+        <th class="leftTH">Druh</th>
+        <th>Měsiční splátka</th>
+        <th class="rightTH">Maximalní částka</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="leftTD" th:text="*{druh}"></td>
+        <td th:text="*{mesicniSplatka}"></td>
+        <td class="rightTD" th:text="*{maximalniCastka}"></td>
+      </tr>
+    </tbody>
+  </table></br>
+  <span id="spanMesicniSplatka" th:text="*{mesicniSplatka}" style="display: none"></span>
+  <span id="spanMaximalniCastka" th:text="*{maximalniCastka}" style="display: none"></span>
+  <label>Vyberte si, jaký údaj si přejete upravit. Druh pojištění není možné změnit</label></br>
+  <select id="selectElement" th:field="*{column}">
+    <option value="mesicni_splatka" >Měsiční splátka</option>
+    <option value="maximalni_castka">Maximalní částka</option>
+  </select></br>
+  <label>Zadejte data </label>
+  <input id="inputElement" type="number" th:field="*{data}" placeholder="" required/></br>
+
+  <button class="userUpdateButton" type="submit">Uložit</button>
+</form>
+</br><form class="zpet" th:action="@{/admin/pojisteni}" method="get"><button type="submit">Zpět</button></form>
+</article>
+<footer th:replace="~{fragments/layout.html :: footer}"></footer>
+<script th:src="@{/scripts/placeholderPojisteniInsert.js}"></script>
+</body>
+</html>

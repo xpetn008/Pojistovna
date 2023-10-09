@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="cs-cz" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/layout.html :: head}">
+</head>
+<body>
+  <header class="mainHeader">
+    <div id="logo">
+      <h1>Pojišťovna</h1>
+    </div>
+    <nav class="menuNav">
+      <ul>
+        <li><a th:href="@{/}">O nás</a></li>
+        <li sec:authorize="isAnonymous()"><a th:href="@{/registrace}">Registrace</a></li>
+        <li sec:authorize="isAnonymous()"><a th:href="@{/prihlaseni}">Přihlášení</a></li>
+        <li th:if="${admin}" sec:authorize="isAuthenticated()"><a th:href="@{/admin}">Admin</a></li>
+        <li th:if="${admin}" sec:authorize="isAuthenticated()"><a th:href="@{/admin/pojistenci}">Pojištěnci</a></li>
+        <li th:if="${admin}" sec:authorize="isAuthenticated()"><a th:href="@{/admin/pojisteni}">Pojištění</a></li>
+        <li th:if="${!admin}" sec:authorize="isAuthenticated()"><a th:href="@{/user}">Profil</a></li>
+        <li sec:authorize="isAuthenticated()"><form method="post" th:action="@{/logout}">
+          <button class="btn text-white">Odhlásit se</button>
+        </form></li>
+        <li><a th:href="@{/kontakt}">Kontakt</a></li>
+      </ul>
+    </nav>
+  </header>
+    <article class="mainArticle" id="indexArticle">
+      <header>
+        <h2>Vítejte v Pojišťovně</h2>
+      </header>
+      <section>
+        <img class="image" th:src="@{images/handshake.jpg}" alt="handshake" src="images/handshake.jpg"/>
+        <p>Vítejte v Pojišťovně, vašem spolehlivém partnerovi pro ochranu a bezpečnost vašich cenných věcí! Jsme hrdí na to, že jsme jednou z předních pojišťoven na trhu, a to z dobrého důvodu. Naše pojištění není jen o papírech a číslech; je to o klidu a jistotě, kterou vám můžeme poskytnout. Co nás dělá lepšími než ostatní pojišťovny?</p>
+        <p><strong>1. Odbornost a Důvěryhodnost:</strong></br>Naše pojišťovna má dlouholetou historii a bohaté zkušenosti v oboru. Naše týmy tvoří odborníci, kteří rozumí složitým potřebám klientů. Díky našim znalostem jsme schopni poskytnout nejlepší rady a doporučení týkající se pojištění.</p>
+        <p><strong>2. Široká Škála Pojištění:</strong></br>Nabízíme širokou škálu pojištění, které pokrývá téměř všechny oblasti vašeho života. Bez ohledu na to, zda potřebujete pojištění nemovitosti, automobilu, zdraví nebo života, máme pro vás optimální řešení. Naše produkty jsou navrženy tak, aby splňovaly různorodé potřeby našich klientů.</p>
+        <p><strong>3. Skvělý Zákaznický Servis:</strong></br>Jsme hrdí na naši vynikající zákaznickou podporu. Naši pracovníci jsou vždy připraveni vám pomoci s jakýmkoliv dotazem nebo problémem, který byste mohli mít. Věříme, že spokojenost našich klientů je klíčem k našemu úspěchu.</p>
+        <p><strong>4. Rychlé a Spravedlivé Vyřízení Škod:</strong></br>V případě nešťastné události nabízíme rychlé a efektivní vyřízení škod. Snažíme se minimalizovat stres a nepříjemnosti, které může taková situace přinést, a zajistit, že naši klienti dostanou spravedlivou náhradu za ztrátu nebo škodu.</p>
+        <p><strong>5. Inovace a Flexibilita:</strong></br>Jsme v první linii inovací v oblasti pojištění. Neustále se snažíme vylepšovat naše produkty a služby, abychom vyhověli měnícím se potřebám a očekáváním našich klientů. Jsme flexibilní a ochotni přizpůsobit naše nabídky podle individuálních požadavků.</p>
+        <p>S Pojišťovnou máte jistotu, že vaše budoucnost je v bezpečí. Spolehněte se na nás jako na svého spolehlivého partnera v oblasti pojištění, a buďte klidní vědomi, že jsme tady pro vás, kdykoliv nás budete potřebovat.</p>
+      </section>
+    </article>
+    <footer th:replace="~{fragments/layout.html :: footer}"></footer>
+  </body>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/layout.html :: head}"></head>
+<body>
+<header th:replace="~{user/userIndex.html :: userHeader}"></header>
+<article class="updateArticle">
+    <p class="vitani">Vítejte <span th:text="${pojistenecDTO.jmeno}"></span> <span th:text="${pojistenecDTO.prijmeni}"></span></p>
+    <form class="updateForm" method="post" th:action="@{/user/update}" th:object="${pojistenecDTO}">
+        <p>Staré údaje</p></br>
+        <table>
+            <thead>
+                <tr>
+                    <th class="leftTH">Jméno</th>
+                    <th>Přijmení</th>
+                    <th>Rodné číslo</th>
+                    <th>Telefon</th>
+                    <th>Ulice a č.p.</th>
+                    <th>Město</th>
+                    <th class="rightTH">PSČ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="leftTD" th:text="*{jmeno}"></td>
+                    <td th:text="*{prijmeni}"></td>
+                    <td th:text="*{rodneCislo}"></td>
+                    <td th:text="*{telefon}"></td>
+                    <td th:text="*{uliceCp}"></td>
+                    <td th:text="*{mesto}"></td>
+                    <td class="rightTD" th:text="*{psc}"></td>
+                </tr>
+            </tbody>
+        </table></br>
+        <span id="spanJmeno" th:text="*{jmeno}" style="display: none"></span>
+        <span id="spanPrijmeni" th:text="*{prijmeni}" style="display: none"></span>
+        <span id="spanTelefon" th:text="*{telefon}" style="display: none"></span>
+        <span id="spanUliceCp" th:text="*{uliceCp}" style="display: none"></span>
+        <span id="spanMesto" th:text="*{mesto}" style="display: none"></span>
+        <span id="spanPsc" th:text="*{psc}" style="display: none"></span>
+        <label>Vyberte si, jaký údaj si přejete upravit</label></br>
+        <small>Pro úpravu rodného čísla musíte smazat pojištěnecký účet.</small>
+        <select id="selectElement" th:field="*{column}">
+            <option value="jmeno" selected>Jméno</option>
+            <option value="prijmeni">Přijmení</option>
+            <option value="telefon">Telefon</option>
+            <option value="uliceCp">Ulice a č.p.</option>
+            <option value="mesto">Město</option>
+            <option value="psc">PSČ</option>
+        </select></br>
+
+        <label>Zadejte upravenou hodnotu</label></br>
+        <input id="inputElement" type="text" th:field="*{data}" placeholder="" /> <small class="text-danger" th:errors="*{data}"></small></br>
+        <button class="userUpdateButton" type="submit">Uložit</button>
+    </form>
+    </br><form class="zpet" th:action="@{/user}" method="get"><button type="submit">Zpět</button></form>
+</article>
+<footer th:replace="~{fragments/layout.html :: footer}"></footer>
+<script th:src="@{/scripts/placeholderPojistenecInsert.js}"></script>
+</body>
+</html>

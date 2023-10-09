@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/layout.html :: head}"></head>
+<body>
+<header th:replace="~{admin/adminIndex.html :: adminHeader}"></header>
+<article class="mainArticle">
+    <div class="outerWrapper" th:if="${success}">
+        <div class="alert-success">
+            <p th:text="${success}"></p>
+        </div>
+        <span class="close-button">&times;</span>
+    </div>
+    <div class="center">
+        <form th:action="@{/admin/pojisteni/new}" method="get">
+            <label>Založit nový pojištění: </label>
+            <button class="userCreateButton" id="novyPojistenecButton" type="submit">Nový</button>
+        </form>
+        <div class="table-container">
+            <table>
+             <thead>
+                <tr>
+                   <th class="leftTH">ID</th>
+                  <th>Druh</th>
+                   <th>Měsiční splátka</th>
+                  <th>Maximalní částka</th>
+                   <th>Počet pojištěných</th>
+                  <th class="rightTH">Možnosti</th>
+                </tr>
+             </thead>
+                <tbody>
+                    <tr th:each="pojisteni : ${pojisteni.entrySet()}">
+                        <td class="leftTD" th:text="${pojisteni.key}"></td>
+                        <td th:text="${pojisteni.value.druh}"></td>
+                        <td th:text="${pojisteni.value.mesicniCastka}"></td>
+                        <td th:text="${pojisteni.value.maximalniCastka}"></td>
+                        <td th:text="${pojisteni.value.pocetPojistenych}"></td>
+                        <td class="moznosti">
+                            <form class="upravit" method="post" th:action="@{/admin/pojisteni/{id}(id=${pojisteni.key})}">
+                                <input th:field="${pojisteniDTO.id}" th:value="${pojisteni.key}" hidden/>
+                                <button class="uprav" type="submit" name="action" value="update">Uprav</button>
+                            </form>
+                            <form class="smazat" method="post" th:action="@{/admin/pojisteni/{id}(id=${pojisteni.key})}">
+                                <input th:field="${pojisteniDTO.id}" th:value="${pojisteni.key}" hidden/>
+                                <button class="smaz" type="submit" name="action" value="delete">Smaž</button>
+                            </form>
+                        </td>
+                     </tr>
+                 </tbody>
+            </table>
+        </div>
+    </div>
+</article>
+<footer th:replace="~{fragments/layout.html :: footer}"></footer>
+<script th:src="@{/scripts/closeAlertBox.js}"></script>
+</body>
+</html>

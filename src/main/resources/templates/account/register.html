@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="cs-cz" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/layout.html :: head}"></head>
+<body>
+<header class="mainHeader">
+  <div id="logo">
+    <h1>Pojišťovna</h1>
+  </div>
+  <nav class="menuNav">
+    <ul>
+      <li><a th:href="@{/}">O nás</a></li>
+      <li sec:authorize="isAnonymous()"><a th:href="@{/registrace}">Registrace</a></li>
+      <li sec:authorize="isAnonymous()"><a th:href="@{/prihlaseni}">Přihlášení</a></li>
+      <li><a th:href="@{/kontakt}">Kontakt</a></li>
+    </ul>
+  </nav>
+</header>
+<article class="accountArticle">
+  <h3>Registrace</h3></br>
+    <form class="accountForm" th:action="@{/registrace}" method="post" th:object="${userDTO}">
+      <label for="email">Uživatelský email</label></br>
+      <input id="email" name="email" type="email" th:field="*{email}" /></br>
+      <small class="text-danger" th:errors="*{email}"></small></br>
+  
+      <label for="password">Uživatelské heslo</label></br>
+      <input id="password" name="password" type="password" th:field="*{password}" /></br>
+      <small class="text-danger" th:errors="*{password}"></small></br>
+  
+      <label for="confirm-password">Kontrola hesla</label></br>
+      <input id="confirm-password" name="password" type="password" th:field="*{confirmPassword}" /></br>
+      <small class="text-danger" th:errors="*{confirmPassword}"></small></br>
+  
+      <button class="submit" type="submit">Registrovat</button></br>
+      <a th:href="@{/prihlaseni}">Přihlásit se</a>
+    </form>
+  </article>
+<footer th:replace="~{fragments/layout.html :: footer}"></footer>
+</body>
+</html>

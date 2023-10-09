@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/layout.html :: head}"></head>
+<body>
+<header th:replace="~{admin/adminIndex.html :: adminHeader}"></header>
+<article class="mainArticle">
+  <div class="center">
+    <form id="pojisteniForm" method="post" th:action="@{/admin/pojisteni/new}" th:object="${pojisteniDTO}">
+      <div class="labelForm">
+       <p>Vyberte druh pojištění:
+        <select id="druh" name="druh" type="" th:field="*{druh}" required>
+         <option value="majetek">Majetek</option>
+         <option value="osoba">Osoba</option>
+        </select></p>
+        <small class="text-danger" th:errors="*{druh}"></br></small>
+      </div>
+
+      <div class="labelForm">
+        <input id="mesicniSplatka" name="mesicniSplatka" type="number" th:field="*{mesicniSplatka}" placeholder="Měsiční splátka" required/><span> Kč</span></br>
+        <small class="text-danger" th:errors="*{mesicniSplatka}"></small>
+      </div></br>
+
+      <div class="labelForm">
+        <input id="maximalniCastka" name="maximalniCastka" type="number" th:field="*{maximalniCastka}" placeholder="Maximální částka plnění" required/><span> Kč</span></br>
+        <small class="text-danger" th:errors="*{maximalniCastka}"></small>
+      </div></br>
+
+      <button class="userCreateButton" type="submit">Uložit</button></br>
+    </form>
+  </div>
+</br><form class="zpet" th:action="@{/admin/pojisteni}" method="get"><button type="submit">Zpět</button></form>
+</article>
+<footer th:replace="~{fragments/layout.html :: footer}"></footer>
+</body>
+</html>

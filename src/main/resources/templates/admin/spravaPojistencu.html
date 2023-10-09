@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/layout.html :: head}"></head>
+<body>
+    <header th:replace="~{admin/adminIndex.html :: adminHeader}">
+    </header>
+    <article class="mainArticle" >
+        <div class="outerWrapper" th:if="${success}">
+            <div class="alert-success">
+                <p th:text="${success}"></p>
+            </div>
+            <span class="close-button">&times;</span>
+        </div>
+        <div class="center">
+            <div class="hledejPojistenceForm">
+                <form class="hledejPojistenceFormFirst" method="post" th:action="@{/admin/pojistenci}" th:object="${pojistenecDTO}">
+                    <label>Zadejte rodné číslo hledaného pojištěnce: </label><input th:field="*{rodneCislo}"/>
+                    <button type="submit">Hledej</button>
+                </form>
+                <form method="get" th:action="@{/admin/pojistenci}">
+                    <button th:if="${hledaniProbehlo}">Všichni</button>
+                </form>
+            </div>
+        <form th:action="@{/admin/pojistenci/new}" method="get">
+            <label>Založit novýho pojištěnce: </label>
+            <button class="userCreateButton" id="novyPojistenecButton" type="submit">Nový</button>
+        </form>
+        <div class="table-container">
+        <table th:if="${!hledaniProbehlo}" id="vsichniPojistenci">
+            <thead class="pojistenciThead">
+                <div class="thead-wrapper">
+                <tr>
+                    <th class="leftTH">ID</th>
+                    <th>Jméno</th>
+                    <th>Přijmení</th>
+                    <th>Rodné číslo</th>
+                    <th>Telefon</th>
+                    <th>Ulice a č.p.</th>
+                    <th>Město</th>
+                    <th>PSČ</th>
+                    <th class="rightTH">Možnosti</th>
+                </tr>
+                </div>
+            </thead>
+            <tbody class="pojistenciTbody">
+                <tr th:each="pojistenec : ${pojistenci.entrySet()}">
+                    <td class="leftTD" th:text="${pojistenec.key}"></td>
+                    <td th:text="${pojistenec.value.jmeno}"></td>
+                    <td th:text="${pojistenec.value.prijmeni}"></td>
+                    <td th:text="${pojistenec.value.rodneCislo}"></td>
+                    <td th:text="${pojistenec.value.telefon}"></td>
+                    <td th:text="${pojistenec.value.uliceCp}"></td>
+                    <td th:text="${pojistenec.value.mesto}"></td>
+                    <td th:text="${pojistenec.value.psc}"></td>
+                    <td class="moznosti">
+                        <form class="upravit" method="post" th:action="@{/admin/pojistenci/uprav/{id}(id=${pojistenec.key})}">
+                            <input th:field="${pojistenecDTO.id}" th:value="${pojistenec.key}" hidden/>
+                            <button class="uprav" type="submit" name="action" value="update">Uprav</button>
+                        </form>
+                        <form class="smazat" method="post" th:action="@{/admin/pojistenci/uprav/{id}(id=${pojistenec.key})}">
+                            <input th:field="${pojistenecDTO.id}" th:value="${pojistenec.key}" hidden/>
+                            <button class="smaz" type="submit" name="action" value="delete">Smaž</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+        <div th:if="${hledaniProbehlo}">
+        <table th:if="${nalezen}">
+            <thead>
+                <tr>
+                    <th class="leftTH">ID</th>
+                    <th>Jméno</th>
+                    <th>Přijmení</th>
+                    <th>Rodné číslo</th>
+                    <th>Telefon</th>
+                    <th>Ulice a č.p.</th>
+                    <th>Město</th>
+                    <th>PSČ</th>
+                    <th class="rightTH">Možnosti</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="pojistenci : ${nalezenePojistenci.entrySet()}">
+                    <td class="leftTD" th:text="${pojistenci.key}"></td>
+                    <td th:text="${pojistenci.value.jmeno}"></td>
+                    <td th:text="${pojistenci.value.prijmeni}"></td>
+                    <td th:text="${pojistenci.value.rodneCislo}"></td>
+                    <td th:text="${pojistenci.value.telefon}"></td>
+                    <td th:text="${pojistenci.value.uliceCp}"></td>
+                    <td th:text="${pojistenci.value.mesto}"></td>
+                    <td th:text="${pojistenci.value.psc}"></td>
+                    <td class="moznosti">
+                        <form class="upravit" method="post" th:action="@{/admin/pojistenci/uprav/{id}(id=${pojistenci.key})}">
+                            <input th:field="${pojistenecDTO.id}" th:value="${pojistenci.key}" hidden/>
+                            <button class="uprav" type="submit" name="action" value="update">Uprav</button>
+                        </form>
+                        <form class="smazat" method="post" th:action="@{/admin/pojistenci/uprav/{id}(id=${pojistenci.key})}">
+                            <input th:field="${pojistenecDTO.id}" th:value="${pojistenci.key}" hidden/>
+                            <button class="smaz" type="submit" name="action" value="delete">Smaž</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+    </br><div th:if="${hledaniProbehlo}"><strong th:if="${!nalezen}">Žádný pojištěnec nebyl nalezen</strong></div>
+        </div>
+    </article>
+    <footer th:replace="~{fragments/layout.html :: footer}"></footer>
+    <script th:src="@{/scripts/closeAlertBox.js}"></script>
+    <script th:src="@{/scripts/onloadPage.js}"></script>
+    </body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/layout.html :: head}"></head>
+<body>
+<header th:replace="~{user/userIndex.html :: userHeader}"></header>
+<article class="mainArticle">
+    <div class="outerWrapper" th:if="${success}">
+        <div class="alert-success">
+            <p th:text="${success}"></p>
+        </div>
+        <span class="close-button">&times;</span>
+    </div>
+    <div class="center">
+        <h3>Nabídka pojištění</h3>
+        <div class="nabidkaNeniPrazdna" th:if="${!nabidkaJePrazdna}">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="leftTH">ID</th>
+                        <th>Druh</th>
+                        <th>Maximální částka plnění</th>
+                        <th>Měsiční splátka</th>
+                        <th class="rightTH">Možnosti</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="pojisteni : ${nabidka.entrySet()}">
+                        <td class="leftTD" th:text="${pojisteni.key}"></td>
+                        <td th:text="${pojisteni.value.druh}"></td>
+                        <td th:text="${pojisteni.value.maximalniCastka}"></td>
+                        <td th:text="${pojisteni.value.mesicniCastka}"></td>
+                        <td class="moznosti">
+                            <form id="pridani" method="post" th:action="@{/user/nabidka/{id}(id=${pojisteni.key})}" th:if="${!maTotoPojisteni[pojisteni.key]}">
+                                <input th:field="${pojistenecDTO.idVybranehoPojisteni}" th:value="${pojisteni.key}" hidden/>
+                                <button class="userCreateButton" type="submit" name="action" value="pridej">Přidej</button>
+                            </form>
+                            <form id="mazani" method="post" th:action="@{/user/nabidka/{id}(id=${pojisteni.key})}" th:if="${maTotoPojisteni[pojisteni.key]}">
+                                <input th:field="${pojistenecDTO.idVybranehoPojisteni}" th:value="${pojisteni.key}" hidden/>
+                                <button class="userDeleteButton" type="submit" name="action" value="odstran">Odstraň</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="nabidkaJePrazdna" th:if="${nabidkaJePrazdna}">
+            Zatím v nabídce nemáme žádne pojištění.
+        </div>
+    </div>
+    </br><form class="zpet" th:action="@{/user}" method="get"><button type="submit">Zpět</button></form>
+</article>
+<footer th:replace="~{fragments/layout.html :: footer}"></footer>
+<script th:src="@{/scripts/closeAlertBox.js}"></script>
+</body>
+</html>

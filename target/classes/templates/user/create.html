@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/layout.html :: head}"></head>
+<body>
+<header th:replace="~{user/userIndex.html :: userHeader}"></header>
+<article class="mainArticle">
+    <div class="center">
+        <h3>Vyplňte údaje pojištěnce</h3></br>
+        <form class="newPojistenec" th:action="@{/user/create}" method="post" th:object="${pojistenecDTO}">
+            <div class="labelForm">
+                <input id="jmeno" name="jmeno" type="text" th:field="*{jmeno}" placeholder="Jméno" required/></br>
+                <small class="text-danger" th:errors="*{jmeno}">test</small>
+            </div></br>
+    
+            <div class="labelForm">
+                <input id="prijmeni" name="prijmeni" type="text" th:field="*{prijmeni}" placeholder="Příjmení" required/></br>
+                <small class="text-danger" th:errors="*{prijmeni}">test</small>
+            </div></br>
+
+            <div class="labelForm">
+                <input id="rodneCislo" name="rodneCislo" type="text" th:field="*{rodneCislo}"  placeholder="Rodné číslo" required/></br>
+                <small class="text-danger" th:errors="*{rodneCislo}">test</small>
+            </div></br>
+    
+            <div class="labelForm">
+                <input id="telefon" name="telefon" type="text" th:field="*{telefon}" placeholder="Telefon" required/></br>
+                <small class="text-danger" th:errors="*{telefon}">test</small>
+            </div></br>
+
+            <div class="labelForm">
+                <input id="uliceCp" name="uliceCp" type="text" th:field="*{uliceCp}" placeholder="Ulice a číslo popisné" required/></br>
+                <small class="text-danger" th:errors="*{uliceCp}">test</small>
+            </div></br>
+
+            <div class="labelForm">
+                <input id="mesto" name="mesto" type="text" th:field="*{mesto}" placeholder="Město" required/></br>
+                <small class="text-danger" th:errors="*{mesto}">test</small>
+            </div></br>
+
+            <div class="labelForm">
+                <input id="psc" name="psc" type="text" th:field="*{psc}" placeholder="PSČ" required/></br>
+                <small class="text-danger" th:errors="*{psc}">test</small>
+            </div></br>
+
+
+            <button class="userCreateButton" type="submit">Uložit</button></br>
+        </form></br>
+    </div>
+    <form class="zpet" th:action="@{/user}" method="get">
+        <button type="submit">Zpět</button>
+    </form>
+</article>
+<footer th:replace="~{fragments/layout.html :: footer}"></footer>
+</body>
+</html>

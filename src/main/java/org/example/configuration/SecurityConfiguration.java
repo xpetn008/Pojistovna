@@ -19,27 +19,33 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import java.io.IOException;
 import java.util.Collection;
 
+/**
+ * Konfigurační třída Spring Security
+ * Nastavuje možnosti přístupu k jednotlivým částem webu.
+ * Rozděluje práva pro běžné uživatele a správce.
+ */
+
 @Configuration
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 @ComponentScan(basePackages = {"org.example.configuration", "org.example.controllers", "org.example.data", "org.example.models"})
 public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        return http.authorizeHttpRequests()
+        return http.authorizeHttpRequests() // Modifikátory přístupu k jednotlivým částem webu
                     .requestMatchers("/images/**", "/styles/**", "/scripts/**", "/fonts/**").permitAll() // Statické zdroje - obrázky, styly atd.
                     .requestMatchers("/", "/registrace", "/prihlaseni", "/kontakt").permitAll() //Hlavní stránky přístupné bez přihlášení
                     .requestMatchers("/logout").authenticated()
                     .requestMatchers("/admin/**").hasRole("ADMIN")
                     .requestMatchers("/user/**").hasRole("USER")
                 .and()
-                .formLogin()
+                .formLogin() // Nastavení přihlašovací stránky
                     .loginPage("/prihlaseni")
                     .loginProcessingUrl("/prihlaseni")
                     .successHandler(successHandler())
                     .usernameParameter("email")
                     .permitAll()
                 .and()
-                .logout()
+                .logout()// Nastavení odhlašení
                     .logoutUrl("/logout")
                     .logoutSuccessUrl("/")
                     .invalidateHttpSession(true)
